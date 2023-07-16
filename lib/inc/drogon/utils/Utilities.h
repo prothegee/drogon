@@ -26,6 +26,8 @@
 #include <limits>
 #include <sstream>
 #include <algorithm>
+// #include <cctype>
+#include <random>
 #ifdef _WIN32
 #include <time.h>
 DROGON_EXPORT char *strptime(const char *s, const char *f, struct tm *tm);
@@ -378,6 +380,50 @@ DROGON_EXPORT bool secureRandomBytes(void *ptr, size_t size);
  * @return the random string
  */
 DROGON_EXPORT std::string secureRandomString(size_t size);
+
+/**
+ * @brief generate random number
+ * 
+ * @note T only accept int & real/double/float
+ * 
+ * @tparam T posibility int & real/double/float
+ * @param min min value of type
+ * @param max max value of type
+ * @return T posibility int & real/double/float
+ */
+template <typename T>
+DROGON_EXPORT T genRandomNumber(const T &min, const T &max)
+{
+    T result;
+
+    std::random_device rd;
+    std::default_random_engine re(rd());
+
+    if (std::is_same<T, int>::value)
+    {
+        std::uniform_int_distribution<int> distribute(min, max);
+        result = distribute(re);
+    }
+    else if (std::is_same<T, double>::value)
+    {
+        std::uniform_real_distribution<double> distribute(min, max);
+        result = distribute(re);
+    }
+    
+
+    return result;
+}
+
+/**
+ * @brief generate letter case string from input param
+ * 
+ * @note only alpabetic input will be modified
+ * 
+ * @param input your string input
+ * @param letterCase 0 is lowercase, 1 is uppercase, 2 is mixedcase, otherwise 0 mean default where input not changed
+ * @return std::string
+ */
+DROGON_EXPORT std::string genLetterCaseString(const std::string &input, const int &letterCase);
 
 template <typename T>
 typename std::enable_if<internal::CanConvertFromStringStream<T>::value, T>::type

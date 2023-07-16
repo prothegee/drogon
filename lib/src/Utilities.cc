@@ -1258,6 +1258,65 @@ std::string secureRandomString(size_t size)
     return ret;
 }
 
+std::string genLetterCaseString(const std::string &input, const int &letterCase)
+{
+    std::string result;
+
+    result.reserve(input.length());
+
+    switch (letterCase)
+    {
+        case 0:
+        {
+            for (int i = 0; i < input.length(); i++)
+            {
+                result += tolower(input[i]);
+            }
+        }
+        break;
+
+        case 1:
+        {
+            for (int i = 0; i < input.length(); i++)
+            {
+                result += toupper(input[i]);
+            }
+        }
+        break;
+
+        case 2:
+        {
+            for (int i = 0; i < input.length(); i++)
+            {
+                // 0 is lowercase, 1 is uppercase
+                int mixedCase = genRandomNumber(0, 1);
+
+                if (mixedCase == 0 && isalpha(input[i]))
+                {
+                    result += tolower(input[i]);
+                }
+                else if (mixedCase == 1 && isalpha(input[i]))
+                {
+                    result += toupper(input[i]);
+                }
+                else
+                {
+                    result += input[i];
+                }
+            }
+        }
+        break;
+
+        default:
+        {
+            result = input;
+        }
+        break;
+    }
+
+    return result;
+}
+
 namespace internal
 {
 const size_t fixedRandomNumber = []() {
