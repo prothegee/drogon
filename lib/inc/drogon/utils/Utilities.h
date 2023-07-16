@@ -384,12 +384,12 @@ DROGON_EXPORT std::string secureRandomString(size_t size);
 /**
  * @brief generate random number
  * 
- * @note T only accept int & real/double/float
+ * @note T only accept int & double
  * 
- * @tparam T posibility int & real/double/float
+ * @tparam T posibility int & double
  * @param min min value of type
  * @param max max value of type
- * @return T posibility int & real/double/float
+ * @return T posibility int & double
  */
 template <typename T>
 DROGON_EXPORT T genRandomNumber(const T &min, const T &max)
